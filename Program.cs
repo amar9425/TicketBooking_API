@@ -4,6 +4,13 @@ using TicketBookingAPI.Data;
 using TicketBookingAPI.Endpoints;
 using TicketBookingAPI.Services;
 
+
+
+using TicketBookingAPI.Services.Auth;
+using TicketBookingAPI.Services.Movies;
+using TicketBookingAPI.Services.Shows;
+using TicketBookingAPI.Services.Bookings;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // OpenAPI
@@ -33,7 +40,12 @@ builder.Services.AddCors(options =>
 });
 
 // Services
-builder.Services.AddScoped<TicketBookingService>();
+
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<IShowService, ShowService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 var app = builder.Build();
 

@@ -1,45 +1,54 @@
-﻿using TicketBookingAPI.Models;
-using TicketBookingAPI.Services;
+﻿using TicketBookingAPI.DTOs;
+using TicketBookingAPI.Models;
+using TicketBookingAPI.Services.Auth;
 
 namespace TicketBookingAPI.Endpoints;
 
 public static class AuthEndpoints
 {
-    public static void MapAuthEndpoints(this WebApplication app)
+    public static void MapAuthEndpoints(
+        this WebApplication app)
     {
-        app.MapGet("/api/test", () => 
+        app.MapGet("/api/test", () =>
         {
-            return Results.Ok(new
-            {
-                Message = "API Testing"
-
-            });
+            return Results.Ok("API Running");
         });
 
         app.MapPost("/api/register",
-        async (Users user, TicketBookingService service) =>
+        async (
+            Users user,
+            IAuthService service) =>
         {
-            var result = await service.RegisterAsync(user);
+            var result =
+                await service.RegisterAsync(user);
 
-            return Results.Ok(result);
+            if (!result)
+            {
+                return Results.BadRequest(
+                    "UserId Already Exists");
+            }
+
+            return Results.Ok(
+                "Registration Successful");
         });
 
         app.MapPost("/api/login",
-async (
-    LoginRequest request,
-    TicketBookingService service) =>
-{
-    var user = await service.LoginAsync(
-        request.UserId,
-        request.Password);
+        async (
+            LoginRequest request,
+            IAuthService service) =>
+        {
+            var user =
+                await service.LoginAsync(
+                    request.UserId,
+                    request.Password);
 
-    if (user == null)
-    {
-        return Results.BadRequest(
-            "Invalid Credentials");
-    }
+            if (user == null)
+            {
+                return Results.BadRequest(
+                    "Invalid Credentials");
+            }
 
-    return Results.Ok(user);
-});
+            return Results.Ok(user);
+        });
     }
-} 
+}

@@ -1,15 +1,18 @@
-﻿using TicketBookingAPI.Services;
+﻿using TicketBookingAPI.Services.Movies;
 
 namespace TicketBookingAPI.Endpoints;
 
 public static class MovieEndpoints
 {
-    public static void MapMovieEndpoints(this WebApplication app)
+    public static void MapMovieEndpoints(
+        this WebApplication app)
     {
         app.MapGet("/api/movies",
-        async (TicketBookingService service) =>
+        async (
+            IMovieService service) =>
         {
-            var movies = await service.GetMoviesAsync();
+            var movies =
+                await service.GetMoviesAsync();
 
             return Results.Ok(movies);
         });
