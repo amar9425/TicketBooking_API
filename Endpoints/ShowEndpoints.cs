@@ -20,6 +20,7 @@ public static class ShowEndpoints
                 return Results.Ok(shows);
             }
         );
+<<<<<<< HEAD
         app.MapGet("/api/shows/{showId}",
     async (
         int showId,
@@ -54,5 +55,8 @@ public static class ShowEndpoints
 
          return Results.Ok(shows);
      });
+=======
+>>>>>>> d17e09942ae38a48299c28b5d999ae14707f4770
     }
 }
+

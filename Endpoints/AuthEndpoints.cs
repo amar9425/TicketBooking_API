@@ -15,6 +15,7 @@ public static class AuthEndpoints
         });
 
         app.MapPost("/api/register",
+<<<<<<< HEAD
  async (
      Users user,
      IAuthService service) =>
@@ -106,5 +107,42 @@ public static class AuthEndpoints
 
      return Results.Ok(user);
  });
+=======
+        async (
+            Users user,
+            IAuthService service) =>
+        {
+            var result =
+                await service.RegisterAsync(user);
+
+            if (!result)
+            {
+                return Results.BadRequest(
+                    "UserId Already Exists");
+            }
+
+            return Results.Ok(
+                "Registration Successful");
+        });
+
+        app.MapPost("/api/login",
+        async (
+            LoginRequest request,
+            IAuthService service) =>
+        {
+            var user =
+                await service.LoginAsync(
+                    request.UserId,
+                    request.Password);
+
+            if (user == null)
+            {
+                return Results.BadRequest(
+                    "Invalid Credentials");
+            }
+
+            return Results.Ok(user);
+        });
+>>>>>>> d17e09942ae38a48299c28b5d999ae14707f4770
     }
 }

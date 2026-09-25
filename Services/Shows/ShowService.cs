@@ -14,7 +14,10 @@ public class ShowService : IShowService
         _db = db;
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d17e09942ae38a48299c28b5d999ae14707f4770
     public async Task<List<Show>>
         GetShowsByMovieAsync(
             int movieId)
@@ -25,6 +28,7 @@ public class ShowService : IShowService
                 x.AvailableSeats > 0)
             .ToListAsync();
     }
+<<<<<<< HEAD
 
     public async Task<Show?>
     GetShowByIdAsync(int showId)
@@ -46,4 +50,6 @@ GetShowsByDateAsync(
                 x.AvailableSeats > 0)
             .ToListAsync();
     }
+=======
+>>>>>>> d17e09942ae38a48299c28b5d999ae14707f4770
 }

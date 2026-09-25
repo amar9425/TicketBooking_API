@@ -42,7 +42,11 @@ builder.Services.AddCors(options =>
 // Services
 
 
+<<<<<<< HEAD
 builder.Services.AddScoped<IAuthService, AuthService>(); 
+=======
+builder.Services.AddScoped<IAuthService, AuthService>();
+>>>>>>> d17e09942ae38a48299c28b5d999ae14707f4770
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IShowService, ShowService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
