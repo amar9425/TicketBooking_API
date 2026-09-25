@@ -1,5 +1,7 @@
-﻿using TicketBookingAPI.Models;
+﻿using TicketBookingAPI.DTOs;
+using TicketBookingAPI.Models;
 using TicketBookingAPI.Services;
+using TicketBookingAPI.Services.Bookings;
 
 namespace TicketBookingAPI.Endpoints;
 
@@ -11,7 +13,7 @@ public static class BookingEndpoints
         app.MapPost("/api/bookings",
         async (
             BookingRequest request,
-            TicketBookingService service) =>
+            IBookingService service) =>
         {
             var result =
                 await service.BookSeatsAsync(
@@ -29,10 +31,12 @@ public static class BookingEndpoints
                 "Booking Successful");
         });
 
+        // find a booking on the behalf of userId.
+
         app.MapGet("/api/users/{userId}/bookings",
         async (
             int userId,
-            TicketBookingService service) =>
+            IBookingService service) =>
         {
             var bookings =
                 await service.GetBookingsByUserAsync(

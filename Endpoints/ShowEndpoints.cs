@@ -1,4 +1,4 @@
-﻿using TicketBookingAPI.Services;
+﻿using TicketBookingAPI.Services.Shows;
 
 namespace TicketBookingAPI.Endpoints;
 
@@ -7,17 +7,52 @@ public static class ShowEndpoints
     public static void MapShowEndpoints(
         this WebApplication app)
     {
-        app.MapGet("/api/shows/movie/{movieId}",
+        app.MapGet(
+            "/api/shows/movie/{movieId}",
+            async (
+                int movieId,
+                IShowService service) =>
+            {
+                var shows =
+                    await service.GetShowsByMovieAsync(
+                        movieId);
 
-        async (
-            int movieId,
-            TicketBookingService service) =>
+                return Results.Ok(shows);
+            }
+        );
+        app.MapGet("/api/shows/{showId}",
+    async (
+        int showId,
+        IShowService service) =>
+    {
+        var show =
+            await service.GetShowByIdAsync(
+                showId
+            );
+
+        if (show == null)
         {
-            var shows =
-                await service.GetShowsByMovieAsync(
-                    movieId);
+            return Results.NotFound();
+        }
 
-            return Results.Ok(shows);
-        });
+        return Results.Ok(show);
+    }
+);
+
+        // Shows available for particular date 
+
+        app.MapGet(
+     "/api/shows/date/{date}",
+     async (
+         DateTime date,
+         IShowService service) =>
+     {
+         var shows =
+             await service
+                 .GetShowsByDateAsync(
+                     date);
+
+         return Results.Ok(shows);
+     });
     }
 }
